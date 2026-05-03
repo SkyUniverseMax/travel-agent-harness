@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "name": "携程瑞士航空旅行助手评测数据集",
+    "version": "1.0",
+    "description": "覆盖航班、酒店、租车、游览、政策查询五大模块共 28 条测试用例",
+    "total_cases": 28
+  },
+  "test_cases": [
+    {
+      "id": 1,
+      "category": "航班查询",
+      "question": "帮我查一下从苏黎世出发的所有航班",
+      "expected_route": "update_flight",
+      "expected_tools": ["search_flights"],
+      "requires_approval": false,
+      "description": "纯查询，应路由到航班助理并调用 search_flights"
+    },
+    {
+      "id": 2,
+      "category": "航班查询",
+      "question": "有没有从纽约到苏黎世的航班",
+      "expected_route": "update_flight",
+      "expected_tools": ["search_flights"],
+      "requires_approval": false,
+      "description": "带到达机场的航班查询"
+    },
+    {
+      "id": 3,
+      "category": "航班查询",
+      "question": "你看看我的机票信息",
+      "expected_route": "update_flight",
+      "expected_tools": [],
+      "requires_approval": false,
+      "description": "查看用户已有航班，子助理从 user_info 能回答"
+    },
+    {
+      "id": 4,
+      "category": "航班查询",
+      "question": "周六有飞往巴塞尔的航班吗？",
+      "expected_route": "update_flight",
+      "expected_tools": ["search_flights"],
+      "requires_approval": false,
+      "description": "带时间范围的模糊查询"
+    },
+    {
+      "id": 5,
+      "category": "航班改签",
+      "question": "我想改签，换一个航班",
+      "expected_route": "update_flight",
+      "expected_tools": ["search_flights", "update_ticket_to_new_flight"],
+      "requires_approval": true,
+      "description": "改签流程：先查可用航班，再改签"
+    },
+    {
+      "id": 6,
+      "category": "航班改签",
+      "question": "帮我把机票换成晚一点的航班",
+      "expected_route": "update_flight",
+      "expected_tools": ["search_flights", "update_ticket_to_new_flight"],
+      "requires_approval": true,
+      "description": "宽松改签请求"
+    },
+    {
+      "id": 7,
+      "category": "取消机票",
+      "question": "我要取消我的机票，ticket_no 是 0005432000984",
+      "expected_route": "update_flight",
+      "expected_tools": ["cancel_ticket"],
+      "requires_approval": true,
+      "description": "取消指定机票号"
+    },
+    {
+      "id": 8,
+      "category": "取消机票",
+      "question": "我不去了，帮我把票退了吧",
+      "expected_route": "update_flight",
+      "expected_tools": ["cancel_ticket"],
+      "requires_approval": true,
+      "description": "模糊取消请求"
+    },
+    {
+      "id": 9,
+      "category": "酒店搜索",
+      "question": "苏黎世有什么好的酒店推荐吗",
+      "expected_route": "book_hotel",
+      "expected_tools": ["search_hotels"],
+      "requires_approval": false,
+      "description": "按城市搜索酒店"
+    },
+    {
+      "id": 10,
+      "category": "酒店搜索",
+      "question": "巴塞尔附近有哪些酒店",
+      "expected_route": "book_hotel",
+      "expected_tools": ["search_hotels"],
+      "requires_approval": false,
+      "description": "另一个城市的酒店搜索"
+    },
+    {
+      "id": 11,
+      "category": "预订酒店",
+      "question": "帮我预订 ID 为 3 的酒店",
+      "expected_route": "book_hotel",
+      "expected_tools": ["book_hotel"],
+      "requires_approval": true,
+      "description": "按 ID 预订酒店"
+    },
+    {
+      "id": 12,
+      "category": "预订酒店",
+      "question": "我想订刚才搜到的第二家酒店",
+      "expected_route": "book_hotel",
+      "expected_tools": ["book_hotel"],
+      "requires_approval": true,
+      "description": "基于搜索结果预订"
+    },
+    {
+      "id": 13,
+      "category": "取消酒店",
+      "question": "把酒店预订取消了吧",
+      "expected_route": "book_hotel",
+      "expected_tools": ["cancel_hotel"],
+      "requires_approval": true,
+      "description": "取消已预订酒店"
+    },
+    {
+      "id": 14,
+      "category": "酒店日期修改",
+      "question": "修改酒店入住日期到 7 月 10 号",
+      "expected_route": "book_hotel",
+      "expected_tools": ["update_hotel"],
+      "requires_approval": true,
+      "description": "修改酒店预订日期"
+    },
+    {
+      "id": 15,
+      "category": "租车搜索",
+      "question": "巴塞尔可以租车吗",
+      "expected_route": "book_car_rental",
+      "expected_tools": ["search_car_rentals"],
+      "requires_approval": false,
+      "description": "按城市搜索租车"
+    },
+    {
+      "id": 16,
+      "category": "租车搜索",
+      "question": "苏黎世有没有自动挡的车可以租",
+      "expected_route": "book_car_rental",
+      "expected_tools": ["search_car_rentals"],
+      "requires_approval": false,
+      "description": "带偏好的租车搜索"
+    },
+    {
+      "id": 17,
+      "category": "预订租车",
+      "question": "帮我预订 ID 为 2 的租车",
+      "expected_route": "book_car_rental",
+      "expected_tools": ["book_car_rental"],
+      "requires_approval": true,
+      "description": "按 ID 预订租车"
+    },
+    {
+      "id": 18,
+      "category": "预订租车",
+      "question": "我要租一辆 SUV，用到周末",
+      "expected_route": "book_car_rental",
+      "expected_tools": ["search_car_rentals", "book_car_rental"],
+      "requires_approval": true,
+      "description": "搜索 + 预订租车"
+    },
+    {
+      "id": 19,
+      "category": "取消租车",
+      "question": "我不需要租车了，取消掉",
+      "expected_route": "book_car_rental",
+      "expected_tools": ["cancel_car_rental"],
+      "requires_approval": true,
+      "description": "取消租车"
+    },
+    {
+      "id": 20,
+      "category": "修改租车",
+      "question": "延长租车时间，多租两天",
+      "expected_route": "book_car_rental",
+      "expected_tools": ["update_car_rental"],
+      "requires_approval": true,
+      "description": "修改租车日期"
+    },
+    {
+      "id": 21,
+      "category": "游览推荐",
+      "question": "卢塞恩有什么好玩的景点",
+      "expected_route": "book_excursion",
+      "expected_tools": ["search_trip_recommendations"],
+      "requires_approval": false,
+      "description": "按城市搜索游览推荐"
+    },
+    {
+      "id": 22,
+      "category": "游览推荐",
+      "question": "推荐一些户外活动类别的项目",
+      "expected_route": "book_excursion",
+      "expected_tools": ["search_trip_recommendations"],
+      "requires_approval": false,
+      "description": "按关键词搜索游览"
+    },
+    {
+      "id": 23,
+      "category": "预订游览",
+      "question": "帮我预订那个登山游览项目",
+      "expected_route": "book_excursion",
+      "expected_tools": ["book_excursion"],
+      "requires_approval": true,
+      "description": "预订游览项目"
+    },
+    {
+      "id": 24,
+      "category": "取消游览",
+      "question": "取消那个游览预订",
+      "expected_route": "book_excursion",
+      "expected_tools": ["cancel_excursion"],
+      "requires_approval": true,
+      "description": "取消游览"
+    },
+    {
+      "id": 25,
+      "category": "公司政策查询",
+      "question": "瑞士航空的行李规定是怎么样的",
+      "expected_route": "primary_assistant",
+      "expected_tools": ["lookup_policy"],
+      "requires_approval": false,
+      "description": "政策查询不委派子助理"
+    },
+    {
+      "id": 26,
+      "category": "公司政策查询",
+      "question": "退票需要什么手续",
+      "expected_route": "primary_assistant",
+      "expected_tools": ["lookup_policy"],
+      "requires_approval": false,
+      "description": "退票政策查询"
+    },
+    {
+      "id": 27,
+      "category": "通用问答",
+      "question": "我的航班几点起飞",
+      "expected_route": "primary_assistant",
+      "expected_tools": [],
+      "requires_approval": false,
+      "description": "从 user_info 直接回答，无需子助理"
+    },
+    {
+      "id": 28,
+      "category": "通用问答",
+      "question": "你好，你能帮我做什么",
+      "expected_route": "primary_assistant",
+      "expected_tools": [],
+      "requires_approval": false,
+      "description": "打招呼，主助理直接回复"
+    }
+  ]
+}
